@@ -30,6 +30,16 @@ class TweetsResource(Resource):
         else:
             return abort(422, "Tweet text can't be empty")
 
+    @api.marshal_with(json_tweet, code=200)
+    def get(self):
+        tweet = db.session.query(Tweet).all()
+        if tweet is None:
+            api.abort(404, "Tweet {} doesn't exist".format(id))
+        else:
+            tweet.text = api.payload["text"]
+            return tweet
+
+
 @api.route('/<int:tweet_id>')
 class TweetResource(Resource):
     @api.marshal_with(json_tweet)
@@ -58,13 +68,3 @@ class TweetResource(Resource):
             db.session.delete(tweet)
             db.session.commit()
             return None
-
-    @api.marshal_with(json_tweet)
-    @api.route('/list/<int:tweet_id>')
-    def list(self):
-        tweet = db.session.query(Tweet).all()
-        if tweet is None:
-            api.abort(404, "Tweet {} doesn't exist".format(id))
-        else:
-            tweet.text = api.payload["text"]
-            return tweet
