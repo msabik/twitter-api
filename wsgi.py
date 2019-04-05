@@ -1,4 +1,5 @@
 from app import create_app
+<<<<<<< HEAD
 from app.apis.tweets import *
 from flask import jsonify
 
@@ -30,3 +31,9 @@ def delete_tweet(tweet_id):
 
 
 
+=======
+
+application = create_app()
+if __name__ == '__main__':
+    application.run(debug=True)
+>>>>>>> df1b6b8718bfc5762252663c6cefef16e49a6ef1
