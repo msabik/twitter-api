@@ -1,5 +1,6 @@
 from datetime import datetime
 
+<<<<<<< HEAD
 from app import db
 
 class Tweet(db.Model):
@@ -10,3 +11,10 @@ class Tweet(db.Model):
 
     def __repr__(self):
         return f"<Tweet #{self.id}>"
+=======
+class Tweet:
+    def __init__(self, text):
+        self.id = None
+        self.text = text
+        self.created_at = datetime.now()
+>>>>>>> df1b6b8718bfc5762252663c6cefef16e49a6ef1

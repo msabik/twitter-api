@@ -11,6 +11,7 @@ json_tweet = api.model('Tweet', {
     'created_at': fields.DateTime
 })
 
+
 json_new_tweet = api.model('New tweet', {
     'text': fields.String(required=True)
 })
@@ -68,3 +69,14 @@ class TweetResource(Resource):
             db.session.delete(tweet)
             db.session.commit()
             return None
+
+
+    @api.marshal_with(json_tweet)
+    @api.route('/list/<int:tweet_id>')
+    def list(self):
+        tweet = db.session.query(Tweet).all()
+        if tweet is None:
+            api.abort(404, "Tweet {} doesn't exist".format(id))
+        else:
+            tweet.text = api.payload["text"]
+
